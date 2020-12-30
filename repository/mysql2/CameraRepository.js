@@ -12,11 +12,11 @@ exports.getCameras = () => {
         });
 };
 
-exports.getCameraById = (empId) => {
+exports.getCameraById = (camId) => {
     const query = `SELECT c.id as id, c.alias, c.location, c.manufacturer, c.resolution
-    FROM Employee c  
+    FROM Camera c  
     where c.id = ?`
-    return db.promise().query(query, [empId])
+    return db.promise().query(query, [camId])
         .then( (results, fields) => {
             const firstRow = results[0][0];
             if(!firstRow) {
@@ -24,7 +24,7 @@ exports.getCameraById = (empId) => {
             }
             // noinspection UnnecessaryLocalVariableJS
             const cam = {
-                id: parseInt(empId),
+                id: parseInt(camId),
                 alias: firstRow.alias,
                 location: firstRow.location,
                 manufacturer: firstRow.manufacturer,

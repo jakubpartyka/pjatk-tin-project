@@ -32,7 +32,10 @@ app.use('/', indexRouter);
 app.use('/camera', cameraRouter);
 app.use('/vehicle', vehicleRouter);
 app.use('/encounter', encounterRouter);
+
+// API
 app.use('/api/camera', cameraApiRouter);
+app.use('/api/camera/:camId', cameraApiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
