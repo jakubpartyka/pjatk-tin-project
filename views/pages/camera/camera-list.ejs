@@ -1,0 +1,87 @@
+<%- include('../../fragments/header.ejs') %>
+
+ <main>
+  <h2>Lista kamer</h2>
+
+  <table class="table-list">
+   <thead>
+   <tr>
+    <th>Alias</th>
+    <th>Lokalizacja</th>
+    <th>Producent</th>
+    <th>Rozdzielczość</th>
+    <th>Akcje</th>
+   </tr>
+   </thead>
+
+
+   <tbody>
+   <tr>
+    <td>Brama gł.</td>
+    <td>Budynek A</td>
+    <td>DVS</td>
+    <td>1080p</td>
+    <td>
+     <ul class="list-actions">
+      <li>
+       <a class="list-actions-button-details" href="/camera/details/:camId">Szczegóły</a>
+      </li>
+      <li>
+       <a class="list-actions-button-edit" href="/camera/details/:camId">Edytuj</a>
+      </li>
+      <li>
+       <a class="list-actions-button-delete" href="">Usuń</a>
+      </li>
+     </ul>
+    </td>
+   </tr>
+
+   <tr>
+    <td>Parking</td>
+    <td>Budynek A</td>
+    <td>OVH</td>
+    <td>720p</td>
+    <td>
+     <ul class="list-actions">
+      <li>
+       <a class="list-actions-button-details" href="/camera/details/:camId">Szczegóły</a>
+      </li>
+      <li>
+       <a class="list-actions-button-edit" href="camera/details/:camId">Edytuj</a>
+      </li>
+      <li>
+       <a class="list-actions-button-delete" href="">Usuń</a>
+      </li>
+     </ul>
+    </td>
+   </tr>
+
+   <tr>
+    <td>Magazyn</td>
+    <td>Budynek C</td>
+    <td>Huawei</td>
+    <td>1080p</td>
+    <td>
+     <ul class="list-actions">
+      <li>
+       <a class="list-actions-button-details" href="/camera/details/:camId">Szczegóły</a>
+      </li>
+      <li>
+       <a class="list-actions-button-edit" href="/camera/details/:camId">Edytuj</a>
+      </li>
+      <li>
+       <a class="list-actions-button-delete" href="">Usuń</a>
+      </li>
+     </ul>
+    </td>
+   </tr>
+
+   </tbody>
+  </table>
+
+  <p><a class="button-add" href="camera/add">Dodaj nową kamerę</a></p>
+
+ </main>
+
+
+<%- include('../../fragments/footer.ejs') %>

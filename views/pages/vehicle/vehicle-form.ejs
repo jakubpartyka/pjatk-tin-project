@@ -1,0 +1,43 @@
+<%- include('../../fragments/header.ejs') %>
+
+ <main>
+  <h2>DODAWANIE POJAZDU</h2>
+
+  <form class="form" novalidate onsubmit="return validateForm();">
+
+   <div>
+    <label for="registration">Nr. rejestracyjny:<abbr title="required" aria-label="required">*</abbr></label>
+   </div>
+    <div>
+    <input type="text" name="registration" id="registration" value="AB1234C">
+    <span id="errorRegistration" class="errors-text"></span>
+   </div>
+
+   <div>
+    <label for="type">Typ:</label>
+   </div>
+   <div>
+    <input type="text" name="type" id="type" value="osobowy">
+   </div>
+
+   <div>
+    <label for="color">Kolor:</label>
+   </div>
+   <div>
+    <input type="text" name="color" id="color" value="biały">
+    <span id="errorColor" class="errors-text"></span>
+
+   </div>
+
+
+   <div class="form-buttons">
+    <p id="errorsSummary" class="errors-text"></p>
+    <input class="form-button-submit" type="submit" value="DODAJ"/>
+    <br>
+    <input class="form-button-cancel" type="reset" value="ANULUJ" onclick="location.href='/vehicle';"/>
+   </div>
+  </form>
+
+
+ </main>
+<%- include('../../fragments/footer.ejs') %>
