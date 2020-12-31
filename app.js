@@ -11,9 +11,7 @@ const encounterRouter = require('./routes/encounterRoute');
 
 // API
 const cameraApiRouter = require('./routes/api/CameraApiRoute');
-
-
-
+const vehicleApiRouter = require('./routes/api/VehicleApiRoute');
 
 
 var app = express();
@@ -36,6 +34,9 @@ app.use('/encounter', encounterRouter);
 // API
 app.use('/api/camera', cameraApiRouter);
 app.use('/api/camera/:camId', cameraApiRouter);
+
+app.use('/api/vehicle', vehicleApiRouter);
+app.use('/api/vehicle/:registration', vehicleApiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

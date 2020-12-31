@@ -37,16 +37,22 @@ exports.getCameraById = (camId) => {
             console.log(err);
             throw err;
         });
-
-
 };
 
-exports.createCamera = (newEmpData) => {
+exports.createCamera = (newCamData) => {
+    console.log('createCamera');
+    console.log(newCamData);
+    const sql = 'INSERT into Camera (alias, location, manufacturer, resolution) VALUES (?, ?, ?, ?)';
+    return db.promise().execute(sql, [newCamData.alias, newCamData.location, newCamData.manufacturer, newCamData.resolution]);
 };
 
-exports.updateCamera = (empId, empData) => {
+exports.updateCamera = (camId, camData) => {
+    const sql = `UPDATE Camera set id = ?, location = ?, manufacturer = ?, resolution = ? where id = ?`;
+    return db.promise().execute(sql, [camData.id, camData.location, camData.manufacturer, camData.resolution, camId]);
 };
 
-exports.deleteCamera = (empId) => {
+exports.deleteCamera = (camId) => {
+    const sql = 'DELETE FROM Camera WHERE id = ?'
+    return db.promise().execute(sql, [camId]);
 };
 
