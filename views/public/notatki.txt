@@ -1,0 +1,4 @@
+http://users.pja.edu.pl/~mdrabik/materials/tin/schedule/daily/index.html
+
+do poprawy:
+przy walidacji formluarza z niepoprawnymi danymi za długi tekst dziwnie zawija się do nowej linii
