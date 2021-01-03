@@ -12,8 +12,9 @@
         <label for="registration">Nr. rej.:<abbr title="required" aria-label="required">*</abbr></label>
 
         <input type="text" name="registration" id="registration" value="<%= veh.registration %>"
-                <%= (formMode == 'showDetails' || formMode == 'edit') ? 'disabled' : '' %>
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>
                class="<%= validationErrors.find(e => e.path.includes('registration')) ? 'error-input' : '' %>"
+               contenteditable="false"
         />
         <span id="registrationError" class="errors-text">
             <% if (validationErrors.find(e => e.path.includes('registration'))) { %>

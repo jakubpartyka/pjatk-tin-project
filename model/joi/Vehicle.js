@@ -6,6 +6,9 @@ const errMessages = (errors) => {
             case "string.empty":
                 err.message = "Pole jest wymagane";
                 break;
+            case "any.required":
+                err.message = "Pole jest wymagane";
+                break;
             case "string.min":
                 err.message = `Pole powinno zawierać co najmniej ${err.local.limit} znaki`;
                 break;
@@ -13,6 +16,7 @@ const errMessages = (errors) => {
                 err.message = `Pole powinno zawierać co najwyżej ${err.local.limit} znaki`;
                 break;
             default:
+                console.log(err.code);
                 break;
         }
     });

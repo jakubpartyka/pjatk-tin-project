@@ -54,13 +54,14 @@ exports.createVehicle = (newVehData) => {
 };
 
 exports.updateVehicle = (registration, vehData) => {
+    console.log("veh repo veh data\n" + vehData.properties);
     const vRes = vehSchema.validate(vehData, { abortEarly: false} );
     if(vRes.error) {
         console.log("error returned " + vRes.error);
         return Promise.reject(vRes.error);
     }
-    const sql = `UPDATE Vehicle set registration = ?, type = ?, color = ? where registration = ?`;
-    return db.promise().execute(sql, [vehData.registration, vehData.type, vehData.color,vehData.registration]);
+    const sql = `UPDATE Vehicle set type = ?, color = ? where registration = ?`;
+    return db.promise().execute(sql, [vehData.type, vehData.color,vehData.registration]);
 };
 
 exports.deleteVehicle = (registration) => {

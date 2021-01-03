@@ -81,6 +81,7 @@ exports.updateVehicle = (req, res, next) => {
     console.log(req.body.registration);
     const registration = req.body.registration;
     const vehData = {...req.body};
+
     VehicleRepository.updateVehicle(registration, vehData)
         .then(result => {
             res.redirect('/vehicle');
