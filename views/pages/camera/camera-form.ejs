@@ -1,54 +1,90 @@
 <%- include('../../fragments/header.ejs') %>
 
 <main>
-  <h2>Formularz dodania nowej kamery</h2>
+    <script type="application/javascript" src="../js/validationCommon.js"></script>
+    <script type="application/javascript" src="../js/validationCameraForm.js"></script>
 
-  <form class="form" novalidate onsubmit="return validateForm();">
+    <h2><%= pageTitle %></h2>
 
-   <div>
-    <label for="alias">Alias:<abbr title="required" aria-label="required">*</abbr></label>
-   </div>
+    <form class="form" method="post" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
 
-   <div>
-    <input type="text" name="alias" id="alias" value="Brama główna">
-    <span id="errorAlias" class="errors-text"></span>
-   </div>
+        <input type="hidden" name="id" value="<%= cam.id %>">
 
 
-   <div>
-    <label for="localization">Lokalizacja:</label>
-   </div>
-   <div>
-    <input type="text" name="localization" id="localization" value="Budynek II">
-   </div>
+        <label for="alias">Alias:</label>
+
+        <input type="text" name="alias" id="alias" value="<%= cam.alias %>"
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>
+               class="<%= validationErrors.find(e => e.path.includes('alias')) ? 'error-input' : '' %>"
+        />
+
+        <span id="errorAlias" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('alias'))) { %>
+                <%= validationErrors.find(e => e.path.includes('alias')).message %>
+            <% } %>
+        </span>
+
+
+        <label for="location">Lokalizacja:</label>
+        <input type="text" name="location" id="location" value="<%= cam.location %>"
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>
+               class="<%= validationErrors.find(e => e.path.includes('alias')) ? 'error-input' : '' %>"
+        />
+
+        <span id="errorLocation" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('location'))) { %>
+                <%= validationErrors.find(e => e.path.includes('location')).message %>
+            <% } %>
+        </span>
+
+
+        <label for="manufacturer">Producent:</label>
+        <input type="text" name="manufacturer" id="manufacturer" value="<%= cam.manufacturer %>"
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>
+               class="<%= validationErrors.find(e => e.path.includes('alias')) ? 'error-input' : '' %>"
+        />
+        <span id="errorManufacturer" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('manufacturer'))) { %>
+                <%= validationErrors.find(e => e.path.includes('manufacturer')).message %>
+            <% } %>
+        </span>
 
 
 
-   <div>
-    <label for="manufacturer">Producent:</label>
-   </div>
-   <div>
-    <input type="text" name="manufacturer" id="manufacturer" value="DVS">
-   </div>
+        <label for="resolution">Rozdzielczość:</label>
 
-   <div>
-    <label for="resolution">Rozdzielczość:</label>
-   </div>
-   <div>
-    <input type="text" name="resolution" id="resolution" value="1440x1080">
-   </div>
+        <input type="text" name="resolution" id="resolution" value="<%= cam.resolution %>"
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>
+               class="<%= validationErrors.find(e => e.path.includes('alias')) ? 'error-input' : '' %>"
+        />
+        <span id="errorResolution" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('resolution'))) { %>
+                <%= validationErrors.find(e => e.path.includes('resolution')).message %>
+            <% } %>
+        </span>
 
 
-   <div class="form-buttons">
-    <p id="errorsSummary" class="errors-text"></p>
-    <input class="form-button-submit" type="submit" value="Dodaj"/>
-    <br>
-    <input class="form-button-cancel" type="button" value="Anuluj" onclick="location.href='/camera';"/>
-   </div>
-  </form>
+        <% if (formMode == 'showDetails') { %>
+            <div class="section-buttons">
+                <a href="/camera/edit/<%= cam.id %>" class="button-edit">Edytuj</a>
+            </div>
+        <% } %>
+
+        <div class="form-buttons">
+            <p id="errorsSummary" class="errors-text"></p>
+            <% if (formMode != 'showDetails') { %>
+                <input class="form-button-submit" type="submit" value="<%= btnLabel %>"/>
+                <a class="form-button-cancel" href="/camera">Anuluj</a>
+            <% } else { %>
+                <a class="form-button-cancel" href="/camera">Powrót</a>
+            <% } %>
+        </div>
 
 
- </main>
+    </form>
+
+
+</main>
 
 
 <%- include('../../fragments/footer.ejs') %>

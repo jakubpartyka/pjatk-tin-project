@@ -6,6 +6,7 @@
   <table class="table-list">
    <thead>
    <tr>
+    <th>ID</th>
     <th>Numer rej.</th>
     <th>Kamera</th>
     <th>Czas</th>
@@ -17,70 +18,27 @@
 
 
    <tbody>
-   <tr>
-    <td>WX1234B</td>
-    <td>1</td>
-    <td>14:08:12</td>
-    <td>true</td>
-    <td>true</td>
-    <td>
-     <ul class="list-actions">
-      <li>
-       <a class="list-actions-button-details" href="/encounter/details/:encId">Szczegóły</a>
-      </li>
-      <li>
-       <a class="list-actions-button-edit" href="/encounter/details/:encId">Edytuj</a>
-      </li>
-      <li>
-       <a class="list-actions-button-delete" href="">Usuń</a>
-      </li>
-     </ul>
-    </td>
-   </tr>
+   <% for (let enc of encs) { %>
+    <tr>
+     <td><%= enc.id %></td>
+     <td><%= enc.Car_registration %></td>
+     <td><%= enc.Camera_id %></td>
+     <td><%= enc.time %></td>
+     <td><%= enc.authorized %></td>
+     <td><%= enc.direction %></td>
 
-   <tr>
-    <td>WD40404</td>
-    <td>3</td>
-    <td>02:43:55</td>
-    <td>false</td>
-    <td>true</td>
-    <td>
-     <ul class="list-actions">
-      <li>
-       <a class="list-actions-button-details" href="/encounter/details/:encId">Szczegóły</a>
-      </li>
-      <li>
-       <a class="list-actions-button-edit" href="/encounter/details/:encId">Edytuj</a>
-      </li>
-      <li>
-       <a class="list-actions-button-delete" href="">Usuń</a>
-      </li>
-     </ul>
-    </td>
-   </tr>
-
-   <tr>
-    <td>KR2138B</td>
-    <td>2</td>
-    <td>18:00:35</td>
-    <td>true</td>
-    <td>false</td>
-    <td>
-     <ul class="list-actions">
-      <li>
-       <a class="list-actions-button-details" href="/encounter/details/:encId">Szczegóły</a>
-      </li>
-      <li>
-       <a class="list-actions-button-edit" href="/encounter/details/:encId">Edytuj</a>
-      </li>
-      <li>
-       <a class="list-actions-button-delete" href="">Usuń</a>
-      </li>
-     </ul>
-    </td>
-   </tr>
-
+     <td>
+      <ul class="list-actions">
+       <li><a href="/encounter/details/<%=enc.id%>" class="list-actions-button-details">Szczegóły</a></li>
+       <li><a href="/encounter/edit/<%=enc.id%>" class="list-actions-button-edit">Edytuj</a></li>
+       <li><a href="/encounter/delete/<%=enc.id%>" class="list-actions-button-delete">Usuń</a></li>
+      </ul>
+     </td>
+    </tr>
+   <% } %>
    </tbody>
+   
+   
   </table>
 
   <p><a class="button-add" href="/encounter/add">Dodaj nowy wpis</a></p>

@@ -1,4 +1,5 @@
 const db = require('../../config/mysql2/db');
+const vehSchema = require('../../model/joi/Vehicle');
 
 exports.getVehicles = () => {
     return db.promise().query('SELECT * FROM Vehicle')
@@ -38,13 +39,26 @@ exports.getVehicleById = (registration) => {
 };
 
 exports.createVehicle = (newVehData) => {
-    console.log('createVehicle');
-    console.log(newVehData);
-    const sql = 'INSERT into Vehicle (registration, type, color) VALUES (?, ?, ?)';
-    return db.promise().execute(sql, [newVehData.registration, newVehData.type, newVehData.color]);
+    const vRes = vehSchema.validate(newVehData, { abortEarly: false} );
+    if(vRes.error) {
+        console.log("error returned " + vRes.error);
+        return Promise.reject(vRes.error);
+    }
+    const registration = newVehData.registration;
+    const type = newVehData.type;
+    const color = newVehData.color;
+    const sql = 'INSERT into Vehicle (registration, type, color) VALUES (?, ?, ?)'
+    return db.promise().execute(sql, [registration, type, color]);
+
+
 };
 
 exports.updateVehicle = (registration, vehData) => {
+    const vRes = vehSchema.validate(vehData, { abortEarly: false} );
+    if(vRes.error) {
+        console.log("error returned " + vRes.error);
+        return Promise.reject(vRes.error);
+    }
     const sql = `UPDATE Vehicle set registration = ?, type = ?, color = ? where registration = ?`;
     return db.promise().execute(sql, [vehData.registration, vehData.type, vehData.color,vehData.registration]);
 };

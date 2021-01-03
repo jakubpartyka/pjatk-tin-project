@@ -13,10 +13,8 @@ function checkRequired(value) {
         return false;
     }
     value = value.toString().trim();
-    if (value === "" || value==="type") {
-        return false;
-    }
-    return true;
+    return !(value === "" || value === "type");
+
 }
 
 function checkTextLengthRange(value, min, max) {

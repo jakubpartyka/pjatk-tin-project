@@ -13,9 +13,10 @@ exports.getEncounters = () => {
 };
 
 exports.getEncounterById = (encId) => {
+    console.log("Encounter Repo. get by ID: " + encId);
     const query = `SELECT *
-    FROM Encounter e 
-    where e.id = ?`
+    FROM Encounter  
+    where id = ?`
     return db.promise().query(query, [encId])
         .then( (results, fields) => {
             const firstRow = results[0][0];
@@ -33,6 +34,7 @@ exports.getEncounterById = (encId) => {
                 direction: firstRow.direction
             }
             console.log("query OK");
+            console.log(enc);
 
             return enc;
         })
@@ -45,8 +47,8 @@ exports.getEncounterById = (encId) => {
 exports.createEncounter = (newEncData) => {
     console.log('createEncounter');
     console.log(newEncData);
-    const sql = 'INSERT into Encounter (id,Car_registration,Camera_id,time,authorized,direction) VALUES (?,?,?,?,?,?)';
-    return db.promise().execute(sql, [newEncData.id, newEncData.Car_registration, newEncData.Camera_id, newEncData.time,newEncData.authorized,newEncData.direction]);
+    const sql = 'INSERT into Encounter (Car_registration,Camera_id,time,authorized,direction) VALUES (?,?,?,?,?)';
+    return db.promise().execute(sql, [newEncData.Car_registration, newEncData.Camera_id, newEncData.time,newEncData.authorized,newEncData.direction]);
 };
 
 exports.updateEncounter = (encId, encData) => {

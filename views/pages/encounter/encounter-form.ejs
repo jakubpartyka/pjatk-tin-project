@@ -1,70 +1,57 @@
 <%- include('../../fragments/header.ejs') %>
 
- <main>
-  <h2>Formularz dodawania wpisu rejestru</h2>
+<main>
+    <script type="application/javascript" src="../js/validationCommon.js"></script>
+    <script type="application/javascript" src="../js/validationEncounterForm.js"></script>
+    <h2><%= pageTitle %></h2>
 
-  <form class="form" novalidate onsubmit="return validateForm();">
+    <form class="form" method="post" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
 
-   <div>
-    <label for="registration">Nr. rejestracyjny:<abbr title="required" aria-label="required">*</abbr></label>
-   </div>
-   <div>
-    <select name="rejestracja" id="registration">
-     <option value="AB1234C">AB1234C</option>
-     <option value="RJ1234W">RJ1234W</option>
-     <option value="JD1239F">JD1239F</option>
-    </select>
-   </div>
+        <input type="hidden" name="id" value="<%= enc.id %>">
 
-   <div>
-    <label for="camera">Kamera:</label>
-   </div>
-   <div>
-    <select name="Kamera" id="camera">
-     <option value="1">1</option>
-     <option value="2">2</option>
-     <option value="3">3</option>
-    </select>
-   </div>
+        <label for="Car_registration">Nr. rej.:<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="Car_registration" id="Car_registration" value="<%= enc.Car_registration %>"
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
+        <span id="errorRegistration" class="errors-text"></span>
 
-   <div>
-    <label for="time">Czas<abbr title="required" aria-label="required">*</abbr></label>
-   </div>
-   <div>
-    <input type="text" name="time" id="time" value="12:30:00">
-    <span id="errorTime" class="errors-text"></span>
-   </div>
+        <label for="Camera_id">Kamera:</label>
+        <input type="text" name="Camera_id" id="Camera_id" value="<%= enc.Camera_id %>"
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
+        <span></span>
 
-   <div>
-    <label for="authorized">Autoryzowano</label>
-   </div>
-   <div>
-    <select name="Autoryzowano" id="authorized">
-    <option value="true">tak</option>
-    <option value="false">nie</option>
-   </select>
-   </div>
+        <label for="time">Czas<abbr title="required" aria-label="required">*</abbr></label>
+        <input type="text" name="time" id="time" value="<%= enc.time %>"
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
+        <span id="errorTime" class="errors-text"></span>
 
-   <div>
-    <label for="direction">Kierunek</label>
-   </div>
-   <div>
-    <select name="Kierunek" id="direction">
-     <option value="true">Do kamery</option>
-     <option value="false">Od kamery</option>
-    </select>
-   </div>
+        <label for="authorized">Autoryzowano</label>
+        <input type="text" name="authorized" id="authorized" value="<%= enc.authorized %>"
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
+        <span></span>
+
+        <label for="direction">Kierunek</label>
+        <input type="text" name="direction" id="direction" value="<%= enc.direction %>"
+                <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
+        <span></span>
+
+        <% if (formMode == 'showDetails') { %>
+            <div class="section-buttons">
+                <a href="/encounter/edit/<%= enc.id %>" class="button-edit">Edytuj</a>
+            </div>
+        <% } %>
+
+        <div class="form-buttons">
+            <p id="errorsSummary" class="errors-text"></p>
+            <% if (formMode != 'showDetails') { %>
+            <input class="form-button-submit" type="submit" value="<%= btnLabel %>"/>
+            <a class="form-button-cancel" href="/encounter">Anuluj</a>
+            <% } else { %>
+                <a class="form-button-cancel" href="/encounter">Powrót</a>
+            <% } %>
+        </div>
 
 
-   <div class="form-buttons">
-    <p id="errorsSummary" class="errors-text"></p>
-    <input class="form-button-submit" type="submit" value="Dodaj"/>
-   <br>
-    <input class="form-button-cancel" type="reset" value="Anuluj" onclick="location.href='/encounter';"/>
-   </div>
-  </form>
-
-
- </main>
+    </form>
+</main>
 
 <%- include('../../fragments/footer.ejs') %>

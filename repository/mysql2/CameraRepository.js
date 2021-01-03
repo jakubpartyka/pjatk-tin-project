@@ -1,4 +1,5 @@
 const db = require('../../config/mysql2/db');
+const camSchema = require('../../model/joi/Camera');
 
 exports.getCameras = () => {
     return db.promise().query('SELECT * FROM Camera')
@@ -40,15 +41,22 @@ exports.getCameraById = (camId) => {
 };
 
 exports.createCamera = (newCamData) => {
-    console.log('createCamera');
-    console.log(newCamData);
-    const sql = 'INSERT into Camera (alias, location, manufacturer, resolution) VALUES (?, ?, ?, ?)';
-    return db.promise().execute(sql, [newCamData.alias, newCamData.location, newCamData.manufacturer, newCamData.resolution]);
+    const vRes = camSchema.validate(newCamData, { abortEarly: false} );
+    if(vRes.error) {
+        console.log("error returned " + vRes.error);
+        return Promise.reject(vRes.error);
+    }
+    const alias = newCamData.alias;
+    const location = newCamData.location;
+    const manufacturer = newCamData.manufacturer;
+    const resolution = newCamData.resolution;
+    const sql = 'INSERT into Camera (alias, location, manufacturer, resolution) VALUES (?, ?, ?, ?)'
+    return db.promise().execute(sql, [alias, location, manufacturer, resolution]);
 };
 
 exports.updateCamera = (camId, camData) => {
-    const sql = `UPDATE Camera set id = ?, location = ?, manufacturer = ?, resolution = ? where id = ?`;
-    return db.promise().execute(sql, [camData.id, camData.location, camData.manufacturer, camData.resolution, camId]);
+    const sql = `UPDATE Camera set id = ?, alias = ?, location = ?, manufacturer = ?, resolution = ? where id = ?`;
+    return db.promise().execute(sql, [camData.id, camData.alias, camData.location, camData.manufacturer, camData.resolution, camId]);
 };
 
 exports.deleteCamera = (camId) => {

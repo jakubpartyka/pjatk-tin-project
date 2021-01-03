@@ -14,66 +14,26 @@
    </tr>
    </thead>
 
-
    <tbody>
-   <tr>
-    <td>WX1234B</td>
-    <td>Osobowy</td>
-    <td>czarny</td>
-    <td>
-     <ul class="list-actions">
-      <li>
-       <a class="list-actions-button-details" href="/vehicle/details/:vehId">Szczegóły</a>
-      </li>
-      <li>
-       <a class="list-actions-button-edit" href="/vehicle/details/:vehId">Edytuj</a>
-      </li>
-      <li>
-       <a class="list-actions-button-delete" href="">Usuń</a>
-      </li>
-     </ul>
-    </td>
-   </tr>
+   <% for (let veh of vehs) { %>
+    <tr>
+     <td><%= veh.registration %></td>
+     <td><%= veh.type %></td>
+     <td><%= veh.color %></td>
 
-   <tr>
-    <td>LK9999L</td>
-    <td>Osobowy</td>
-    <td>n/d</td>
-    <td>
-     <ul class="list-actions">
-      <li>
-       <a class="list-actions-button-details" href="/vehicle/details/:vehId">Szczegóły</a>
-      </li>
-      <li>
-       <a class="list-actions-button-edit" href="/vehicle/details/:vehId">Edytuj</a>
-      </li>
-      <li>
-       <a class="list-actions-button-delete" href="">Usuń</a>
-      </li>
-     </ul>
-    </td>
-   </tr>
-
-   <tr>
-    <td>KR2138B</td>
-    <td>Ciężarowy</td>
-    <td>biały</td>
-    <td>
-     <ul class="list-actions">
-      <li>
-       <a class="list-actions-button-details" href="/vehicle/details/:vehId">Szczegóły</a>
-      </li>
-      <li>
-       <a class="list-actions-button-edit" href="/vehicle/details/:vehId">Edytuj</a>
-      </li>
-      <li>
-       <a class="list-actions-button-delete" href="">Usuń</a>
-      </li>
-     </ul>
-    </td>
-   </tr>
-
+     <td>
+      <ul class="list-actions">
+       <li><a href="/vehicle/details/<%=veh.registration%>" class="list-actions-button-details">Szczegóły</a></li>
+       <li><a href="/vehicle/edit/<%=veh.registration%>" class="list-actions-button-edit">Edytuj</a></li>
+       <li><a href="/vehicle/delete/<%=veh.registration%>" class="list-actions-button-delete">Usuń</a></li>
+      </ul>
+     </td>
+    </tr>
+   <% } %>
    </tbody>
+   
+   
+   
   </table>
 
   <p><a class="button-add" href="/vehicle/add">Dodaj nowy pojazd</a></p>
