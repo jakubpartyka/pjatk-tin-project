@@ -86,6 +86,18 @@ exports.updateCamera = (req, res, next) => {
     CameraRepository.updateCamera(camId, camData)
         .then(result => {
             res.redirect('/camera');
+        })
+        .catch(err => {
+            console.log(err.details);
+            res.render('pages/camera/camera-form', {
+                cam: camData,
+                formMode: 'edit',
+                pageTitle: 'Edycja danych kamery',
+                btnLabel: 'Edytuj dane kamery',
+                formAction: '/camera/edit',
+                navLocation: 'camera',
+                validationErrors: err.details
+            });
         });
 };
 

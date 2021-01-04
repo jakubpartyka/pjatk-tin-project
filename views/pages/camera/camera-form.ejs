@@ -1,15 +1,14 @@
 <%- include('../../fragments/header.ejs') %>
 
 <main>
-    <script type="application/javascript" src="../js/validationCommon.js"></script>
-    <script type="application/javascript" src="../js/validationCameraForm.js"></script>
+    <script type="application/javascript" src="../../../js/validationCommon.js"></script>
+    <script type="application/javascript" src="../../../js/validationCameraForm.js"></script>
 
     <h2><%= pageTitle %></h2>
 
     <form class="form" method="post" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
 
         <input type="hidden" name="id" value="<%= cam.id %>">
-
 
         <label for="alias">Alias:</label>
 
@@ -28,7 +27,7 @@
         <label for="location">Lokalizacja:</label>
         <input type="text" name="location" id="location" value="<%= cam.location %>"
                 <%= (formMode == 'showDetails') ? 'disabled' : '' %>
-               class="<%= validationErrors.find(e => e.path.includes('alias')) ? 'error-input' : '' %>"
+               class="<%= validationErrors.find(e => e.path.includes('location')) ? 'error-input' : '' %>"
         />
 
         <span id="errorLocation" class="errors-text">
@@ -41,7 +40,7 @@
         <label for="manufacturer">Producent:</label>
         <input type="text" name="manufacturer" id="manufacturer" value="<%= cam.manufacturer %>"
                 <%= (formMode == 'showDetails') ? 'disabled' : '' %>
-               class="<%= validationErrors.find(e => e.path.includes('alias')) ? 'error-input' : '' %>"
+               class="<%= validationErrors.find(e => e.path.includes('manufacturer')) ? 'error-input' : '' %>"
         />
         <span id="errorManufacturer" class="errors-text">
             <% if (validationErrors.find(e => e.path.includes('manufacturer'))) { %>
@@ -55,7 +54,7 @@
 
         <input type="text" name="resolution" id="resolution" value="<%= cam.resolution %>"
                 <%= (formMode == 'showDetails') ? 'disabled' : '' %>
-               class="<%= validationErrors.find(e => e.path.includes('alias')) ? 'error-input' : '' %>"
+               class="<%= validationErrors.find(e => e.path.includes('resolution')) ? 'error-input' : '' %>"
         />
         <span id="errorResolution" class="errors-text">
             <% if (validationErrors.find(e => e.path.includes('resolution'))) { %>

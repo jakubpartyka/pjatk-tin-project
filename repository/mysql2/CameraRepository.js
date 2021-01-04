@@ -55,6 +55,11 @@ exports.createCamera = (newCamData) => {
 };
 
 exports.updateCamera = (camId, camData) => {
+    const vRes = camSchema.validate(camData, { abortEarly: false} );
+    if(vRes.error) {
+        console.log("error returned " + vRes.error);
+        return Promise.reject(vRes.error);
+    }
     const sql = `UPDATE Camera set id = ?, alias = ?, location = ?, manufacturer = ?, resolution = ? where id = ?`;
     return db.promise().execute(sql, [camData.id, camData.alias, camData.location, camData.manufacturer, camData.resolution, camId]);
 };

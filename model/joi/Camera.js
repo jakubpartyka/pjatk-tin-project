@@ -12,8 +12,8 @@ const errMessages = (errors) => {
             case "string.max":
                 err.message = `Pole powinno zawierać co najwyżej ${err.local.limit} znaki`;
                 break;
-                break;
             default:
+                err.message = `To pole zawiera błędy`;
                 break;
         }
     });
