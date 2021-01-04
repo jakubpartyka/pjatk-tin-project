@@ -31,6 +31,7 @@ exports.showAddCameraForm = (req, res, next) => {
 
 exports.showEditCameraForm = (req, res, next) => {
     const camId = req.params.camId;
+    const validationErrors = [];
     CameraRepository.getCameraById(camId)
         .then(cam => {
             res.render('pages/camera/camera-form', {
@@ -39,15 +40,15 @@ exports.showEditCameraForm = (req, res, next) => {
                 pageTitle: 'Edycja danych kamery',
                 btnLabel: 'Edytuj dane kamery',
                 formAction: '/camera/edit',
-                navLocation: 'camera'
+                navLocation: 'camera',
+                validationErrors: validationErrors
             });
         });
 };
 
 
 exports.showCameraDetails = (req, res, next) => {
-    // res.render('pages/camera/camera-info', {navLocation: 'camera'});
-
+    const validationErrors = [];
     const camId = req.params.camId;
     CameraRepository.getCameraById(camId)
         .then(cam => {
@@ -56,7 +57,8 @@ exports.showCameraDetails = (req, res, next) => {
                 formMode: 'showDetails',
                 pageTitle: 'Szczegóły kamery',
                 formAction: '',
-                navLocation: 'cam'
+                navLocation: 'cam',
+                validationErrors: validationErrors
             });
         });
 }

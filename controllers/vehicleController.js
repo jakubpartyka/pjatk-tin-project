@@ -41,9 +41,9 @@ exports.showEditVehicleForm = (req, res, next) => {
         });
 };
 
-
 exports.showVehicleDetails = (req, res, next) => {
     const registration = req.params.registration;
+    const validationErrors = [];
     VehicleRepository.getVehicleById(registration)
         .then(veh => {
             res.render('pages/vehicle/vehicle-form', {
@@ -51,7 +51,8 @@ exports.showVehicleDetails = (req, res, next) => {
                 formMode: 'showDetails',
                 pageTitle: 'Szczegóły pojazdu',
                 formAction: '',
-                navLocation: 'veh'
+                navLocation: 'veh',
+                validationErrors: validationErrors
             });
         });
 }
