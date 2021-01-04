@@ -1,8 +1,6 @@
 const CameraRepository = require('../repository/mysql2/CameraRepository');
 
 exports.showCameraList = (req, res, next) => {
-    // res.render('pages/camera/camera-list', {navLocation: 'camera' });
-
     CameraRepository.getCameras()
         .then(cams => {
             res.render('pages/camera/camera-list', {
@@ -13,10 +11,7 @@ exports.showCameraList = (req, res, next) => {
 }
 
 exports.showAddCameraForm = (req, res, next) => {
-    console.log("show add camera form from cam controller");
-
     const validationErrors = [];
-
     res.render('pages/camera/camera-form', {
         cam: {},
         pageTitle: 'Dodaj nową kamerę',

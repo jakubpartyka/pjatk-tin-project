@@ -10,17 +10,24 @@
         <input type="hidden" name="id" value="<%= enc.id %>">
 
         <label for="Car_registration">Nr. rej.:<abbr title="required" aria-label="required">*</abbr></label>
+
         <input type="text" name="Car_registration" id="Car_registration" value="<%= enc.Car_registration %>"
                 <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
         <span id="errorRegistration" class="errors-text"></span>
 
         <label for="Camera_id">Kamera:</label>
-        <input type="text" name="Camera_id" id="Camera_id" value="<%= enc.Camera_id %>"
-                <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
+        <select id="Camera_id" name="Camera_id" required <%= (formMode == 'showDetails') ? 'disabled' : '' %> >
+            <option value="" selected>--- Wybierz kamerę ---</option>
+            <% for (let i = 0; i < allCams.length; i++) { let cam = allCams[i]; %>
+            <option value="<%= cam.id %>" label="<%= cam.id %>">
+
+            </option>
+            <% } %>
+        </select>
         <span></span>
 
         <label for="time">Czas<abbr title="required" aria-label="required">*</abbr></label>
-        <input type="text" name="time" id="time" value="<%= enc.time %>"
+        <input type="text" name="time" id="time" value="<%= (formMode === 'createNew') ? '' : enc.time.toISOString().split('T')[0] + ' ' +  enc.time.toISOString().split('T')[1].substring(0,8)%>"
                 <%= (formMode == 'showDetails') ? 'disabled' : '' %>/>
         <span id="errorTime" class="errors-text"></span>
 
@@ -43,8 +50,8 @@
         <div class="form-buttons">
             <p id="errorsSummary" class="errors-text"></p>
             <% if (formMode != 'showDetails') { %>
-            <input class="form-button-submit" type="submit" value="<%= btnLabel %>"/>
-            <a class="form-button-cancel" href="/encounter">Anuluj</a>
+                <input class="form-button-submit" type="submit" value="<%= btnLabel %>"/>
+                <a class="form-button-cancel" href="/encounter">Anuluj</a>
             <% } else { %>
                 <a class="form-button-cancel" href="/encounter">Powrót</a>
             <% } %>

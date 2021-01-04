@@ -1,8 +1,10 @@
 const EncounterRepository = require('../repository/mysql2/EncounterRepository');
 
-exports.showEncounterList = (req, res, next) => {
-    // res.render('pages/encounter/encounter-list', {navLocation: 'encounter' });
+const CameraRepository = require('../repository/mysql2/CameraRepository');
+const VehicleRepository = require('../repository/mysql2/VehicleRepository');
 
+
+exports.showEncounterList = (req, res, next) => {
     EncounterRepository.getEncounters()
         .then(encs => {
             res.render('pages/encounter/encounter-list', {
@@ -14,6 +16,8 @@ exports.showEncounterList = (req, res, next) => {
 
 exports.showAddEncounterForm = (req, res, next) => {
     res.render('pages/encounter/encounter-form', {
+        allCams: {},
+        allVehs: {},
         enc: {},
         pageTitle: 'Nowy wpis',
         formMode: 'createNew',
@@ -25,11 +29,13 @@ exports.showAddEncounterForm = (req, res, next) => {
 
 exports.showEditEncounterForm = (req, res, next) => {
     console.log(req.body);
+    let allCams, allVehs;
     const encId = req.params.encId;
     EncounterRepository.getEncounterById(encId)
         .then(enc => {
             res.render('pages/encounter/encounter-form', {
                 enc: enc,
+                allCams: {},
                 formMode: 'edit',
                 pageTitle: 'Edycja danych wpisu',
                 btnLabel: 'Edytuj dane wpisu',
@@ -43,11 +49,13 @@ exports.showEditEncounterForm = (req, res, next) => {
 
 exports.showEncounterDetails = (req, res, next) => {
     const encId = req.params.encId;
+    let allCams, allVehs;
     console.log("Enc Controller, show encounter details for enc id: " + encId);
     EncounterRepository.getEncounterById(encId)
         .then(enc => {
             res.render('pages/encounter/encounter-form', {
                 enc: enc,
+                allCams: {},
                 formMode: 'showDetails',
                 pageTitle: 'Szczegóły wpisu',
                 formAction: '',

@@ -23,9 +23,9 @@
      <td><%= enc.id %></td>
      <td><%= enc.Car_registration %></td>
      <td><%= enc.Camera_id %></td>
-     <td><%= enc.time %></td>
-     <td><%= enc.authorized %></td>
-     <td><%= enc.direction %></td>
+     <td><%= enc.time.toISOString().split('T')[0] + ' ' +  enc.time.toISOString().split('T')[1].substring(0,8)%></td>
+     <td><%= (enc.authorized === 1) ? 'tak' : 'nie' %></td>
+     <td><%= (enc.direction === '1') ? 'przodem' : 'tyłem' %></td>
 
      <td>
       <ul class="list-actions">
