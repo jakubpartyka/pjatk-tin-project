@@ -13,6 +13,20 @@ exports.getVehicles = () => {
         });
 };
 
+exports.getVehicleEncounters = (registration) => {
+    console.log('getting encounters for reg ' + registration);
+    const query = `SELECT * FROM Encounter WHERE Car_registration = ?`;
+    return db.promise().query(query, [registration])
+        .then( (results, fields) => {
+            console.log(results[0]);
+            return results[0];
+        })
+        .catch(err => {
+            console.log(err);
+            throw err;
+        });
+}
+
 exports.getVehicleById = (registration) => {
     console.log(registration);
     const query = `SELECT *
