@@ -64,7 +64,7 @@ exports.showVehicleDetails = (req, res, next) => {
                 formMode: 'showDetails',
                 pageTitle: 'Szczegóły pojazdu',
                 formAction: '',
-                navLocation: 'veh',
+                navLocation: 'vehicle',
                 validationErrors: validationErrors
             });
         });
@@ -85,7 +85,7 @@ exports.addVehicle = (req, res, next) => {
                 formMode: 'createNew',
                 btnLabel: 'Dodaj pojazd',
                 formAction: '/vehicle/add',
-                navLocation: 'veh',
+                navLocation: 'vehicle',
                 validationErrors: err.details
             });
         });
@@ -117,7 +117,7 @@ exports.updateVehicle = (req, res, next) => {
                 pageTitle: 'Edycja danych pojazdu',
                 btnLabel: 'Edytuj dane pojazdu',
                 formAction: '/vehicle/edit',
-                navLocation: 'veh',
+                navLocation: 'vehicle',
                 validationErrors: error.details
             });
         })

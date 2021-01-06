@@ -19,7 +19,9 @@ exports.showAddEncounterForm = (req, res, next) => {
     const enc = {
         id: -1,
         Camera_id: -2,
-        Car_registration: -3
+        Car_registration: -3,
+        authorized: 0,
+        direction: 1
     }
     CameraRepository.getCameras()
         .then(cams => {

@@ -52,7 +52,7 @@ exports.showCameraDetails = (req, res, next) => {
                 formMode: 'showDetails',
                 pageTitle: 'Szczegóły kamery',
                 formAction: '',
-                navLocation: 'cam',
+                navLocation: 'camera',
                 validationErrors: validationErrors
             });
         });
@@ -73,7 +73,7 @@ exports.addCamera = (req, res, next) => {
                 formMode: 'createNew',
                 btnLabel: 'Dodaj kamerę',
                 formAction: '/camera/add',
-                navLocation: 'cam',
+                navLocation: 'camera',
                 validationErrors: err.details
             });
         });
