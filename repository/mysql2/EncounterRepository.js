@@ -1,4 +1,6 @@
 const db = require('../../config/mysql2/db');
+const encSchema = require('../../model/joi/Encounter');
+
 
 exports.getEncounters = () => {
     return db.promise().query('SELECT * FROM Encounter')
@@ -45,6 +47,11 @@ exports.getEncounterById = (encId) => {
 };
 
 exports.createEncounter = (newEncData) => {
+    const vRes = encSchema.validate(newEncData, { abortEarly: false} );
+    if(vRes.error) {
+        console.log("error returned " + vRes.error);
+        return Promise.reject(vRes.error);
+    }
     console.log('createEncounter');
     console.log(newEncData);
     const sql = 'INSERT into Encounter (Car_registration,Camera_id,time,authorized,direction) VALUES (?,?,?,?,?)';
@@ -52,8 +59,14 @@ exports.createEncounter = (newEncData) => {
 };
 
 exports.updateEncounter = (encId, encData) => {
-    const sql = `UPDATE Encounter set id = ?, Car_registration = ?, Camera_id = ?, time = ?, authorized = ?, direction = ? WHERE id = ?`;
-    return db.promise().execute(sql, [encData.id, encData.Car_registration, encData.Camera_id, encData.time, encData.authorized, encData.direction, encId]);
+    console.log(encData);
+    const vRes = encSchema.validate(encData, { abortEarly: false} );
+    if(vRes.error) {
+        console.log("error returned " + vRes.error);
+        return Promise.reject(vRes.error);
+    }
+    const sql = `UPDATE Encounter set time = ?, authorized = ?, direction = ? WHERE id = ?`;
+    return db.promise().execute(sql, [encData.time, encData.authorized, encData.direction, encId]);
 };
 
 exports.deleteEncounter = (encId) => {

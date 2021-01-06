@@ -6,6 +6,9 @@ const errMessages = (errors) => {
             case "string.empty":
                 err.message = "Pole jest wymagane";
                 break;
+            case "any.required":
+                err.message = "Pole jest wymagane";
+                break;
             case "string.min":
                 err.message = `Pole powinno zawierać co najmniej ${err.local.limit} znaki`;
                 break;
@@ -13,40 +16,43 @@ const errMessages = (errors) => {
                 err.message = `Pole powinno zawierać co najwyżej ${err.local.limit} znaki`;
                 break;
             default:
-                err.message = `To pole zawiera błędy`;
+                console.log(err.code);
                 break;
         }
     });
     return errors;
 }
 
-const camSchema = Joi.object({
-    id: Joi.number()
+const vehSchema = Joi.object({
+    id: Joi.string()
         .optional()
         .allow(""),
-    alias: Joi.string()
+    Car_registration: Joi.string()
         .min(2)
         .max(60)
         .required()
         .error(errMessages),
-    location: Joi.string()
+    Camera_id: Joi.number()
+        .allow("")
+        .error(errMessages),
+    time: Joi.string()
+        .required()
         .min(2)
         .max(60)
         .error(errMessages),
-    manufacturer: Joi.string()
+    authorized: Joi.string()
         .optional()
         .allow("")
-        .min(2)
-        .max(60)
+        .min(1)
+        .max(1)
         .error(errMessages),
-    resolution: Joi.string()
+    direction: Joi.string()
         .optional()
         .allow("")
-        .min(2)
-        .max(60)
-        .error(errMessages)
+        .min(1)
+        .max(1)
+        .error(errMessages),
 });
 
 
-
-module.exports = camSchema;
+module.exports = vehSchema;

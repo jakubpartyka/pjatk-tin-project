@@ -27,10 +27,17 @@ exports.showEditVehicleForm = (req, res, next) => {
     console.log("show edit veh form from veh controller");
     const registration = req.params.registration;
     const validationErrors = [];
-    VehicleRepository.getVehicleById(registration)
+    let encounters;
+    VehicleRepository.getVehicleEncounters(registration)
+        .then(encs => {
+            encounters = encs;
+            return VehicleRepository.getVehicleById(registration)
+        })
         .then(veh => {
             res.render('pages/vehicle/vehicle-form', {
                 veh: veh,
+                registration: registration,
+                encounters: encounters,
                 formMode: 'edit',
                 pageTitle: 'Edycja danych pojazdu',
                 btnLabel: 'Edytuj dane pojazdu',
@@ -85,26 +92,35 @@ exports.addVehicle = (req, res, next) => {
 };
 
 exports.updateVehicle = (req, res, next) => {
+    let error;
     console.log(req.body.registration);
-    const registration = req.body.registration;
-    const vehData = {...req.body};
+    const id = req.body.id;
+    const registration = id;
+    let vehData = {...req.body};
+    vehData.registration = registration;
 
-    VehicleRepository.updateVehicle(registration, vehData)
+    VehicleRepository.updateVehicle(id, vehData)
         .then(result => {
             res.redirect('/vehicle');
         })
         .catch(err => {
+            error = err;
             console.log(err.details);
+            return VehicleRepository.getVehicleEncounters(id)
+        })
+        .then(encs => {
             res.render('pages/vehicle/vehicle-form', {
                 veh: vehData,
+                registration: registration,
+                encounters: encs,
                 formMode: 'edit',
                 pageTitle: 'Edycja danych pojazdu',
                 btnLabel: 'Edytuj dane pojazdu',
                 formAction: '/vehicle/edit',
-                navLocation: 'vehicle',
-                validationErrors: err.details
+                navLocation: 'veh',
+                validationErrors: error.details
             });
-        });
+        })
 };
 
 exports.deleteVehicle = (req, res, next) => {
