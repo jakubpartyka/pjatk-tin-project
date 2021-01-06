@@ -63,11 +63,6 @@
         </span>
 
 
-        <% if (formMode == 'showDetails') { %>
-            <div class="section-buttons">
-                <a href="/camera/edit/<%= cam.id %>" class="button-edit">Edytuj</a>
-            </div>
-        <% } %>
 
         <div class="form-buttons">
             <p id="errorsSummary" class="errors-text"></p>
@@ -75,6 +70,7 @@
                 <input class="form-button-submit" type="submit" value="<%= btnLabel %>"/>
                 <a class="form-button-cancel" href="/camera">Anuluj</a>
             <% } else { %>
+                <a href="/camera/edit/<%= cam.id %>" class="button-edit form-button-edit">Edytuj</a>
                 <a class="form-button-cancel" href="/camera">Powrót</a>
             <% } %>
         </div>

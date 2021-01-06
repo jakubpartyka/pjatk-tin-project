@@ -47,11 +47,6 @@
             <% } %>
         </span>
 
-        <% if (formMode == 'showDetails') { %>
-            <div class="section-buttons">
-                <a href="/vehicle/edit/<%= veh.registration %>" class="button-edit">Edytuj</a>
-            </div>
-        <% } %>
 
         <div class="form-buttons">
             <p id="errorsSummary" class="errors-text"></p>
@@ -59,6 +54,7 @@
                 <input class="form-button-submit" type="submit" value="<%= btnLabel %>"/>
                 <a class="form-button-cancel" href="/vehicle">Anuluj</a>
             <% } else { %>
+                <a href="/vehicle/edit/<%= veh.registration %>" class="button-edit form-button-edit">Edytuj</a>
                 <a class="form-button-cancel" href="/vehicle">Powrót</a>
             <% } %>
         </div>
@@ -83,8 +79,8 @@
             <tbody>
             <% for (let e of encounters) { %>
                 <tr>
-                    <td><a href="/encounter/details/<%= e.id %>"><%= e.id %></a></td>
-                    <td><a href="/camera/details/<%= e.Camera_id %>"><%= e.Camera_id %></a></td>
+                    <td><a class="td-a" href="/encounter/details/<%= e.id %>"><%= e.id %></a></td>
+                    <td><a class="td-a" href="/camera/details/<%= e.Camera_id %>"><%= e.Camera_id %></a></td>
                     <td><%= e.time.toISOString().split('T')[0] + ' ' + e.time.toISOString().split('T')[1].substring(0,8) %></td>
                     <td><%= (e.authorized === 1) ? 'tak' : 'nie' %></td>
                     <td><%= (e.direction === '1') ? 'przodem' : 'tyłem' %> </td>

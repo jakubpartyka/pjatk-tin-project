@@ -55,18 +55,13 @@
         </select>
         <span></span>
 
-        <% if (formMode == 'showDetails') { %>
-            <div class="section-buttons">
-                <a href="/encounter/edit/<%= enc.id %>" class="button-edit">Edytuj</a>
-            </div>
-        <% } %>
-
         <div class="form-buttons">
             <p id="errorsSummary" class="errors-text"></p>
             <% if (formMode != 'showDetails') { %>
                 <input class="form-button-submit" type="submit" value="<%= btnLabel %>"/>
                 <a class="form-button-cancel" href="/encounter">Anuluj</a>
             <% } else { %>
+                <a href="/encounter/edit/<%= enc.id %>" class="button-edit form-button-edit">Edytuj</a>
                 <a class="form-button-cancel" href="/encounter">Powrót</a>
             <% } %>
         </div>
