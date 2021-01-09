@@ -1,14 +1,12 @@
 function validateForm() {
     const registration = document.getElementById('registration');
-    const type = document.getElementById('type');
-    const color = document.getElementById('color');
-
     const errorRegistration = document.getElementById('errorRegistration');
-    const errorType = document.getElementById('errorType');
-    const errorColor = document.getElementById('errorColor');
+
     const errorsSummary = document.getElementById('errorsSummary');
 
     let valid = true;
+
+    console.log("test from veh vad");
 
     if (!checkRequired(registration.value)) {
         valid = false;
@@ -28,4 +26,3 @@ function validateForm() {
 }
 
 resetErrors([firstNameInput, lastNameInput, emailInput], [errorFirstName, errorLastName, errorEmail], errorsSummary);
-
