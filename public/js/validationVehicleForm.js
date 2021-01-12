@@ -28,18 +28,18 @@ function validateForm() {
     }
 
     // CHECK TYPE
-    if (type.value.length > 0 && !checkTextLengthRange(type.value,2,60)){
+    if (type.value.length > 0 && !checkTextLengthRange(type.value,2,30)){
         valid = false;
         type.classList.add("error-input");
-        errorType.innerText = "Pole powinno zawierać od 2 do 60 znaków";
+        errorType.innerText = "Pole powinno zawierać od 2 do 30 znaków, lub pozostać puste";
     }
 
 
     // CHECK COLOR
-    if (color.value.length > 0 && !checkTextLengthRange(color.value,2,60)){
+    if (color.value.length > 0 && !checkTextLengthRange(color.value,2,30)){
         valid = false;
         color.classList.add("error-input");
-        errorColor.innerText = "Pole powinno zawierać od 2 do 60 znaków";
+        errorColor.innerText = "Pole powinno zawierać od 2 do 30 znaków, lub pozostać puste";
     }
 
 
