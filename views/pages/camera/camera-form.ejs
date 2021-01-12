@@ -79,6 +79,39 @@
     </form>
 
 
+    <!--REGISTRY DATA-->
+    <% if (formMode == 'showDetails' || formMode == 'edit') { %>
+        <h2 style="margin-top: 1.5em">
+            Wpisy rejestru dotyczące kamery <%= cam.alias %>
+        </h2>
+        <table class="table-list" style="width: 60%">
+            <thead>
+            <tr>
+                <th>ID wpisu w rejestrze</th>
+                <th>Rejestracja pojazdu</th>
+                <th>Czas</th>
+                <th>Autoryzowano</th>
+                <th>Kierunek</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for (let e of encounters) { %>
+                <tr>
+                    <td><a class="td-a" href="/encounter/details/<%= e.id %>"><%= e.id %></a></td>
+                    <td><a class="td-a" href="/vehicle/details/<%= e.Car_registration %>"><%= e.Car_registration %></a></td>
+                    <td><%= e.time.toISOString().split('T')[0] + ' ' + e.time.toISOString().split('T')[1].substring(0,8) %></td>
+                    <td><%= (e.authorized === 1) ? 'tak' : 'nie' %></td>
+                    <td><%= (e.direction === '1') ? 'przodem' : 'tyłem' %> </td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+        <span style="margin-top: 2px">
+            <%= (encounters.length === 0) ? 'Brak wpisów' : '' %>
+        </span>
+    <% } %>
+
+
 </main>
 
 
