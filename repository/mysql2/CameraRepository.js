@@ -40,6 +40,21 @@ exports.getCameraById = (camId) => {
         });
 };
 
+exports.getCameraEncounters = (camId) => {
+    console.log('getting encounters for camId ' + camId);
+    const query = `SELECT * FROM Encounter WHERE Camera_id = ?`;
+    return db.promise().query(query, [camId])
+        .then( (results, fields) => {
+            console.log(results[0]);
+            return results[0];
+        })
+        .catch(err => {
+            console.log(err);
+            throw err;
+        });
+}
+
+
 exports.createCamera = (newCamData) => {
     const vRes = camSchema.validate(newCamData, { abortEarly: false} );
     if(vRes.error) {

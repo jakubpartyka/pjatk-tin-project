@@ -27,10 +27,16 @@ exports.showAddCameraForm = (req, res, next) => {
 exports.showEditCameraForm = (req, res, next) => {
     const camId = req.params.camId;
     const validationErrors = [];
-    CameraRepository.getCameraById(camId)
+    let encounters;
+    CameraRepository.getCameraEncounters(camId)
+        .then(encs => {
+            encounters = encs;
+            return CameraRepository.getCameraById(camId)
+        })
         .then(cam => {
             res.render('pages/camera/camera-form', {
                 cam: cam,
+                encounters: encounters,
                 formMode: 'edit',
                 pageTitle: 'Edycja danych kamery',
                 btnLabel: 'Edytuj dane kamery',
@@ -45,10 +51,16 @@ exports.showEditCameraForm = (req, res, next) => {
 exports.showCameraDetails = (req, res, next) => {
     const validationErrors = [];
     const camId = req.params.camId;
-    CameraRepository.getCameraById(camId)
+    let encounters;
+    CameraRepository.getCameraEncounters(camId)
+        .then(encs => {
+            encounters = encs;
+            return CameraRepository.getCameraById(camId)
+        })
         .then(cam => {
             res.render('pages/camera/camera-form', {
                 cam: cam,
+                encounters: encounters,
                 formMode: 'showDetails',
                 pageTitle: 'Szczegóły kamery',
                 formAction: '',
@@ -110,7 +122,6 @@ exports.deleteCamera = (req, res, next) => {
         })
         .catch(err => {
             errorMessage = err.message;
-            console.log("error occurred");
             return CameraRepository.getCameras()
                 .then(cams => {
                     res.render('pages/camera/camera-error', {
