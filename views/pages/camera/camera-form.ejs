@@ -6,11 +6,11 @@
 
     <h2><%= pageTitle %></h2>
 
-    <form class="form" method="post" action="<%= formAction %>" novalidate>
+    <form class="form" method="post" action="<%= formAction %>" novalidate onsubmit="//return validateForm()">
 
         <input type="hidden" name="id" value="<%= cam.id %>">
 
-        <label for="alias">Alias:</label>
+        <label for="alias">Alias:<abbr title="required" aria-label="required">*</abbr></label>
 
         <input type="text" name="alias" id="alias" value="<%= cam.alias %>"
                 <%= (formMode == 'showDetails') ? 'disabled' : '' %>

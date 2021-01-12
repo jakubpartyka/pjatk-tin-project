@@ -5,13 +5,13 @@ exports.showCameraList = (req, res, next) => {
         .then(cams => {
             res.render('pages/camera/camera-list', {
                 cams: cams,
+                errorMessage: 'none',
                 navLocation: 'camera'
             });
         });
 }
 
 exports.showAddCameraForm = (req, res, next) => {
-    const validationErrors = [];
     res.render('pages/camera/camera-form', {
         cam: {},
         pageTitle: 'Dodaj nową kamerę',
@@ -19,9 +19,9 @@ exports.showAddCameraForm = (req, res, next) => {
         btnLabel: 'Dodaj',
         formAction: '/camera/add',
         navLocation: 'camera',
-        validationErrors: validationErrors
+        validationErrors: []
     })
-    console.log("finished");
+
 }
 
 exports.showEditCameraForm = (req, res, next) => {
@@ -103,9 +103,22 @@ exports.updateCamera = (req, res, next) => {
 
 exports.deleteCamera = (req, res, next) => {
     const camId = req.params.camId;
+    let errorMessage;
     CameraRepository.deleteCamera(camId)
         .then(() => {
             res.redirect('/camera');
+        })
+        .catch(err => {
+            errorMessage = err.message;
+            console.log("error occurred");
+            return CameraRepository.getCameras()
+                .then(cams => {
+                    res.render('pages/camera/camera-error', {
+                        cams: cams,
+                        errorMessage: errorMessage,
+                        navLocation: 'camera'
+                    });
+                })
         });
 };
 
