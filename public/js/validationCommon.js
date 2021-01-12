@@ -1,3 +1,6 @@
+const specialCharacters = new RegExp(/^.*[@#?`!';<>{}$].*$/s);
+
+
 function resetErrors(inputs, errorTexts, errorInfo) {
     for(let i=0; i<inputs.length; i++) {
         inputs[i].classList.remove("error-input");
@@ -17,6 +20,13 @@ function checkRequired(value) {
 
 }
 
+function checkCharacters(value){
+    if (!value)
+        return false;
+    value = value.toString().trim();
+    return !value.match(specialCharacters);
+}
+
 function checkTextLengthRange(value, min, max) {
     if (!value) {
         return false;
@@ -29,49 +39,6 @@ function checkTextLengthRange(value, min, max) {
     return !(min && length < min);
 }
 
-function checkEmail(value) {
-    if (!value) {
-        return false;
-    }
-    value = value.toString().trim();
-    const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    return re.test(value);
-}
-
-function checkNumber(value) {
-    if (!value) {
-        return false;
-    }
-    if (isNaN(value)) {
-        return false;
-    }
-    return true;
-}
-
-function checkNumberRange(value, min, max) {
-    if (!value) {
-        return false;
-    }
-    if (isNaN(value)) {
-        return false;
-    }
-    value = parseFloat(value);
-    if (value < min) {
-        return false;
-    }
-    if (value > max) {
-        return false;
-    }
-    return true;
-}
-
-function checkDate(value) {
-    if (!value) {
-        return false;
-    }
-    const pattern = /(\d{4})-(\d{2})-(\d{2})/;
-    return pattern.test(value);
-}
 
 function checkDateIfAfter(value, compareTo) {
     if (!value) {
@@ -102,24 +69,6 @@ function checkTimestamp(value) {
     }
     const pattern = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/;
     return pattern.test(value);
-}
-
-function checkIfBooleanValue(value){
-    if (!value) {
-        return false;
-    }
-
-    if (value.test('^true$'))
-        return true;
-    if (value.test('^false$'))
-        return true;
-
-    if (value.test('^tak$'))
-        return true;
-    if (value.test('^nie$'))
-        return true;
-
-    return false;
 }
 
 

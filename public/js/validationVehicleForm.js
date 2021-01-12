@@ -25,6 +25,10 @@ function validateForm() {
         valid = false;
         registration.classList.add("error-input");
         errorRegistration.innerText = "Pole powinno zawierać od 2 do 10 znaków";
+    } else if (registration.value.length > 0 && !checkCharacters(registration.value)){
+        valid = false;
+        registration.classList.add("error-input");
+        errorRegistration.innerText = "Pole zawiera niedozwolone znaki";
     }
 
     // CHECK TYPE
@@ -32,6 +36,10 @@ function validateForm() {
         valid = false;
         type.classList.add("error-input");
         errorType.innerText = "Pole powinno zawierać od 2 do 30 znaków, lub pozostać puste";
+    } else if (type.value.length > 0 && !checkCharacters(type.value)){
+        valid = false;
+        type.classList.add("error-input");
+        errorType.innerText = "Pole zawiera niedozwolone znaki";
     }
 
 
@@ -40,6 +48,10 @@ function validateForm() {
         valid = false;
         color.classList.add("error-input");
         errorColor.innerText = "Pole powinno zawierać od 2 do 30 znaków, lub pozostać puste";
+    } else if (color.value.length > 0 && !checkCharacters(color.value)){
+        valid = false;
+        color.classList.add("error-input");
+        errorColor.innerText = "Pole zawiera niedozwolone znaki";
     }
 
 

@@ -1,10 +1,15 @@
 const Joi = require('joi');
 
+const specialCharacters = new RegExp(/^.*[@#?`!';<>{}$].*$/s);
+
 const errMessages = (errors) => {
     errors.forEach(err => {
         switch (err.code) {
             case "string.empty":
                 err.message = "Pole jest wymagane";
+                break;
+            case "string.pattern.invert.base":
+                err.message = 'Pole zawiera niedozwolone znaki!';
                 break;
             case "string.min":
                 err.message = `Pole powinno zawierać co najmniej ${err.local.limit} znaki`;
@@ -32,24 +37,28 @@ const camSchema = Joi.object({
         .min(2)
         .max(30)
         .required()
+        .regex(specialCharacters, { invert: true })
         .error(errMessages),
     location: Joi.string()
         .optional()
         .allow("")
         .min(2)
         .max(30)
+        .regex(specialCharacters, { invert: true })
         .error(errMessages),
     manufacturer: Joi.string()
         .optional()
         .allow("")
         .min(2)
         .max(30)
+        .regex(specialCharacters, { invert: true })
         .error(errMessages),
     resolution: Joi.string()
         .optional()
         .allow("")
         .min(2)
         .max(30)
+        .regex(specialCharacters, { invert: true })
         .error(errMessages)
 });
 

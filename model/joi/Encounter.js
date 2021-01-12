@@ -1,10 +1,15 @@
 const Joi = require('joi');
 
+const specialCharacters = new RegExp(/^.*[#?`';<>{}$].*$/s);
+
 const errMessages = (errors) => {
     errors.forEach(err => {
         switch (err.code) {
             case "string.empty":
                 err.message = "Pole jest wymagane";
+                break;
+            case "string.pattern.invert.base":
+                err.message = 'Pole zawiera niedozwolone znaki!';
                 break;
             case "any.required":
                 err.message = "Pole jest wymagane";
