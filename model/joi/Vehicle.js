@@ -13,7 +13,7 @@ const errMessages = (errors) => {
                 err.message = `Pole powinno zawierać co najmniej ${err.local.limit} znaki`;
                 break;
             case "string.max":
-                err.message = `Pole powinno zawierać co najwyżej ${err.local.limit} znaki`;
+                err.message = `Pole powinno zawierać co najwyżej ${err.local.limit} znaków`;
                 break;
             default:
                 console.log(err.code);
@@ -29,7 +29,7 @@ const vehSchema = Joi.object({
         .allow(""),
     registration: Joi.string()
         .min(2)
-        .max(60)
+        .max(10)
         .required()
         .error(errMessages),
     type: Joi.string()

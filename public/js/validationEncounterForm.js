@@ -1,14 +1,22 @@
 function validateForm() {
-    const time = document.getElementById('time');
     const registration = document.getElementById('Car_registration');
     const cameraId = document.getElementById('Camera_id');
+    const time = document.getElementById('time');
+    const authorized = document.getElementById('authorized');
+    const direction = document.getElementById('direction');
 
-    const errorTime = document.getElementById('errorTime');
+
     const errorRegistration = document.getElementById('errorRegistration');
     const errorCamera = document.getElementById('errorCamera');
+    const errorTime = document.getElementById('errorTime');
+    const errorAuthorized = document.getElementById('errorAuthorized');
+    const errorDirection = document.getElementById('errorDirection');
+
+    const errorsSummary = document.getElementById('errorsSummary');
 
     let valid = true;
 
+    resetErrors([registration, cameraId, time,authorized,direction], [errorRegistration, errorCamera, errorTime,errorAuthorized,errorDirection], errorsSummary);
 
     if (!checkRequired(registration.value)) {
         valid = false;
@@ -17,7 +25,7 @@ function validateForm() {
     } else if (!checkTextLengthRange(registration.value,2,10)) {
         valid = false;
         registration.classList.add("error-input");
-        errorRegistration.innerText = "Pole powinno mieć zawierać od 4 do 10 znaków";
+        errorRegistration.innerText = "Pole powinno mieć zawierać od 2 do 10 znaków";
     }
 
     if (!checkRequired(cameraId.value)) {
@@ -36,6 +44,18 @@ function validateForm() {
         errorTime.innerText = "Pole powinno mieć format yyyy-mm-dd hh:mm:ss";
     }
 
+    if(!checkRequired(authorized.value)){
+        valid = false;
+        authorized.classList.add("error-input");
+        errorAuthorized.innerText = "Pole jest wymagane";
+    }
+
+    if(!checkRequired(direction.value)){
+        valid = false;
+        direction.classList.add("error-input");
+        errorDirection.innerText = "Pole jest wymagane";
+    }
+
     if (!valid) {
         errorsSummary.innerText = "Formularz zawiera błędy";
     }
@@ -43,5 +63,5 @@ function validateForm() {
     return valid;
 }
 
-resetErrors([firstNameInput, lastNameInput, emailInput], [errorFirstName, errorLastName, errorEmail], errorsSummary);
+resetErrors([registration, cameraId, time], [errorRegistration, errorCamera, errorTime], errorsSummary);
 

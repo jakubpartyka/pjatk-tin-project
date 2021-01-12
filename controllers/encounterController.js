@@ -104,33 +104,50 @@ exports.showEncounterDetails = (req, res, next) => {
 }
 
 exports.addEncounter = (req, res, next) => {
-    console.log("add encounter data BELOW");
-    console.log(req.body);
     const encData = { ...req.body };
+    console.log("add encounter data BELOW\n" + encData);
     EncounterRepository.createEncounter(encData)
         .then( result => {
             res.redirect('/encounter');
         })
         .catch(err => {
-            console.log(err.details);
-            res.render('pages/encounter/encounter-form', {
-                allCams: {},
-                allVehs: {},
-                enc: {},
-                pageTitle: 'Nowy wpis',
-                formMode: 'createNew',
-                btnLabel: 'Dodaj wpis',
-                formAction: '/encounter/add',
-                navLocation: 'encounter',
-                validationErrors: err.details
-            });
+            let allCams, allVehs;
+            const error = err;
+            const enc = {
+                id: -1,
+                Camera_id: -2,
+                Car_registration: -3,
+                authorized: 0,
+                direction: 1
+            }
+            CameraRepository.getCameras()
+                .then(cams => {
+                    allCams = cams;
+                    return VehicleRepository.getVehicles();
+                })
+                .then(vehs => {
+                    allVehs = vehs;
+                    res.render('pages/encounter/encounter-form', {
+                        allCams: allCams,
+                        allVehs: allVehs,
+                        enc: enc,
+                        pageTitle: 'Nowy wpis',
+                        formMode: 'createNew',
+                        btnLabel: 'Dodaj wpis',
+                        formAction: '/encounter/add',
+                        navLocation: 'encounter',
+                        validationErrors: error.details
+                    });
+                });
         });
 };
 
 exports.updateEncounter = (req, res, next) => {
-    console.log(req.body.id);
     const encId = req.body.id;
     let encData = { ...req.body };
+    encData.Car_registration = "XXX";
+    encData.Camera_id = 0;
+
     EncounterRepository.updateEncounter(encId, encData)
         .then( result => {
             res.redirect('/encounter');

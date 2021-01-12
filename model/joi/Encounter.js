@@ -29,11 +29,11 @@ const vehSchema = Joi.object({
         .allow(""),
     Car_registration: Joi.string()
         .min(2)
-        .max(60)
+        .max(10)
         .required()
         .error(errMessages),
     Camera_id: Joi.number()
-        .allow("")
+        .required()
         .error(errMessages),
     time: Joi.string()
         .required()

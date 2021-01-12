@@ -3,15 +3,14 @@
 <main>
     <script type="application/javascript" src="../../../js/validationCommon.js"></script>
     <script type="application/javascript" src="../../../js/validationVehicleForm.js"></script>
-
     <h2><%= pageTitle %></h2>
 
     <form class="form" method="post" action="<%= formAction %>" novalidate onsubmit="return validateForm();">
 
+        <!--REGISTRATION-->
+
         <input type="hidden" name="id" value="<%= veh.registration %>">
-
         <label for="registration">Nr. rej.:<abbr title="required" aria-label="required">*</abbr></label>
-
         <input type="text" name="registration" id="registration" value="<%= veh.registration %>"
                 <%= (formMode === 'showDetails' || formMode === 'edit') ? 'disabled' : '' %>
                class="<%= validationErrors.find(e => e.path.includes('registration')) ? 'error-input' : '' %>"
@@ -23,8 +22,10 @@
             <% } %>
         </span>
 
-        <label for="type">Typ:</label>
 
+        <!--TYPE-->
+
+        <label for="type">Typ:</label>
         <input type="text" name="type" id="type" value="<%= veh.type %>"
                 <%= (formMode == 'showDetails') ? 'disabled' : '' %>
                class="<%= validationErrors.find(e => e.path.includes('type')) ? 'error-input' : '' %>"
@@ -35,6 +36,7 @@
             <% } %>
         </span>
 
+        <!--COLOR-->
 
         <label for="color">Kolor:</label>
         <input type="text" name="color" id="color" value="<%= veh.color %>"
@@ -48,13 +50,14 @@
         </span>
 
 
+        <!--FORM BUTTONS-->
         <div class="form-buttons">
             <p id="errorsSummary" class="errors-text"></p>
             <% if (formMode != 'showDetails') { %>
                 <input class="form-button-submit" type="submit" value="<%= btnLabel %>"/>
                 <a class="form-button-cancel" href="/vehicle">Anuluj</a>
             <% } else { %>
-                <a href="/vehicle/edit/<%= veh.registration %>" class="button-edit form-button-edit">Edytuj</a>
+                <a href="/vehicle/edit/<%=veh.registration %>" class="button-edit form-button-edit">Edytuj</a>
                 <a class="form-button-cancel" href="/vehicle">Powrót</a>
             <% } %>
         </div>
@@ -62,6 +65,7 @@
 
     </form>
 
+    <!--REGISTRY DATA-->
     <% if (formMode == 'showDetails' || formMode == 'edit') { %>
         <h2 style="margin-top: 1.5em">
             Wpisy rejestru dotyczące pojazdu <%= veh.registration %>

@@ -78,7 +78,7 @@ exports.addVehicle = (req, res, next) => {
             res.redirect('/vehicle');
         })
         .catch(err => {
-            console.log(err.details);
+            console.log('error returned:\n' + err.details);
             res.render('pages/vehicle/vehicle-form', {
                 veh: vehData,
                 pageTitle: 'Dodawanie Pojazdu',
@@ -107,19 +107,19 @@ exports.updateVehicle = (req, res, next) => {
             error = err;
             console.log(err.details);
             return VehicleRepository.getVehicleEncounters(id)
-        })
-        .then(encs => {
-            res.render('pages/vehicle/vehicle-form', {
-                veh: vehData,
-                registration: registration,
-                encounters: encs,
-                formMode: 'edit',
-                pageTitle: 'Edycja danych pojazdu',
-                btnLabel: 'Edytuj dane pojazdu',
-                formAction: '/vehicle/edit',
-                navLocation: 'vehicle',
-                validationErrors: error.details
-            });
+                .then(encs => {
+                    res.render('pages/vehicle/vehicle-form', {
+                        veh: vehData,
+                        registration: registration,
+                        encounters: encs,
+                        formMode: 'edit',
+                        pageTitle: 'Edycja danych pojazdu',
+                        btnLabel: 'Edytuj dane pojazdu',
+                        formAction: '/vehicle/edit',
+                        navLocation: 'vehicle',
+                        validationErrors: error.details
+                    });
+                });
         })
 };
 

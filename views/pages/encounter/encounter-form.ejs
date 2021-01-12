@@ -7,21 +7,33 @@
 
     <form class="form" method="post" action="<%= formAction %>" novalidate >
 
+        <!--HIDDEN ID ELEMENT-->
         <input type="hidden" name="id" value="<%= enc.id %>">
 
-        <label for="Car_registration">Nr. rej.:<abbr title="required" aria-label="required">*</abbr></label>
 
-        <select id="Car_registration" name="Car_registration" required <%= (formMode === 'showDetails') ? 'disabled' : '' %> >
+        <!--CAR REGISTRATION-->
+        <label for="Car_registration">Nr. rej.:<abbr title="required" aria-label="required">*</abbr></label>
+        <select id="Car_registration" name="Car_registration" required <%= (formMode === 'showDetails' || formMode === 'edit') ? 'disabled' : '' %>
+                class="<%= validationErrors.find(e => e.path.includes('time')) ? 'error-input' : '' %>"
+        >
             <option value="" selected disabled>--- Wybierz pojazd ---</option>
             <% for (let i = 0; i < allVehs.length; i++) { let veh = allVehs[i]; %>
             <option value="<%= veh.registration %>" label="<%= veh.registration %>"
                 <%= (veh.registration.toString() === enc.Car_registration.toString()) ? 'selected' : ''%>  ></option>
             <% } %>
         </select>
-        <span id="errorRegistration" class="errors-text"></span>
+        <span id="errorRegistration" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('Car_registration'))) { %>
+                <%= validationErrors.find(e => e.path.includes('Car_registration')).message %>
+            <% } %>
+        </span>
 
-        <label for="Camera_id">Kamera:</label>
-        <select id="Camera_id" name="Camera_id" required <%= (formMode === 'showDetails' || formMode === 'edit' ) ? 'disabled' : '' %> >
+
+        <!--CAMERA ID-->
+        <label for="Camera_id">Kamera:<abbr title="required" aria-label="required">*</abbr></label>
+        <select id="Camera_id" name="Camera_id" required <%= (formMode === 'showDetails' || formMode === 'edit' ) ? 'disabled' : '' %>
+                class="<%= validationErrors.find(e => e.path.includes('time')) ? 'error-input' : '' %>"
+        >
             <option value="" selected disabled>--- Wybierz kamerę ---</option>
             <% for (let i = 0; i < allCams.length; i++) { let cam = allCams[i]; %>
             <option value="<%= cam.id %>" label="<%= 'ID: ' + cam.id + ' ALIAS: ' + cam.alias %>"
@@ -34,27 +46,47 @@
             <% } %>
         </span>
 
-        <label for="time">Czas<abbr title="required" aria-label="required">*</abbr></label>
+
+        <!--TIME-->
+        <label for="time">Czas:<abbr title="required" aria-label="required">*</abbr></label>
         <input type="text" name="time" id="time" value="<%= (formMode === 'createNew') ? '' : enc.time.toISOString().split('T')[0] + ' ' +  enc.time.toISOString().split('T')[1].substring(0,8)%>"
                 <%= (formMode == 'showDetails') ? 'disabled' : '' %>
                class="<%= validationErrors.find(e => e.path.includes('time')) ? 'error-input' : '' %>"
         />
-        <span id="errorTime" class="errors-text"></span>
+        <span id="errorTime" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('time'))) { %>
+                <%= validationErrors.find(e => e.path.includes('time')).message %>
+            <% } %>
+        </span>
 
-        <label for="authorized">Autoryzowano</label>
+        <!--AUTHORIZED-->
+
+        <label for="authorized">Autoryzowano<abbr title="required" aria-label="required">*</abbr></label>
         <select id="authorized" name="authorized" <%= (formMode === 'showDetails') ? 'disabled' : '' %> >
             <option value="1"  <%= (enc.authorized.toString() === '1') ? 'selected' : ''%> >tak</option>
             <option value="0" <%= (enc.authorized.toString() === '0') ? 'selected' : ''%> >nie</option>
         </select>
-        <span></span>
+        <span id="errorAuthorized" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('authorized'))) { %>
+                <%= validationErrors.find(e => e.path.includes('authorized')).message %>
+            <% } %>
+        </span>
 
-        <label for="direction">Kierunek</label>
+
+        <!--DIRECTION-->
+        <label for="direction">Kierunek<abbr title="required" aria-label="required">*</abbr></label>
         <select id="direction" name="direction" <%= (formMode === 'showDetails') ? 'disabled' : '' %> >
             <option value="1"  <%= (enc.direction.toString() === '1') ? 'selected' : ''%> >przodem</option>
             <option value="0" <%= (enc.direction.toString() === '0') ? 'selected' : ''%> >tyłem</option>
         </select>
-        <span></span>
+        <span id="errorDirection" class="errors-text">
+            <% if (validationErrors.find(e => e.path.includes('direction'))) { %>
+                <%= validationErrors.find(e => e.path.includes('direction')).message %>
+            <% } %>
+        </span>
 
+
+        <!--FORM BUTTONS-->
         <div class="form-buttons">
             <p id="errorsSummary" class="errors-text"></p>
             <% if (formMode != 'showDetails') { %>
@@ -65,8 +97,6 @@
                 <a class="form-button-cancel" href="/encounter">Powrót</a>
             <% } %>
         </div>
-
-
     </form>
 </main>
 

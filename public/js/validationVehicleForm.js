@@ -1,6 +1,11 @@
 function validateForm() {
     const registration = document.getElementById('registration');
+    const type = document.getElementById('type');
+    const color = document.getElementById('color');
+
     const errorRegistration = document.getElementById('errorRegistration');
+    const errorType = document.getElementById('errorType');
+    const errorColor = document.getElementById('errorColor');
 
     const errorsSummary = document.getElementById('errorsSummary');
 
@@ -8,21 +13,40 @@ function validateForm() {
 
     console.log("test from veh vad");
 
+    // RESET ERRORS
+    resetErrors([registration, type, color], [errorRegistration, errorType, errorColor], errorsSummary);
+
+    // CHECK REGISTRATION
     if (!checkRequired(registration.value)) {
         valid = false;
         registration.classList.add("error-input");
         errorRegistration.innerText = "Pole jest wymagane";
-    } else if (!checkTextLengthRange(registration.value, 4, 10)) {
+    } else if (!checkTextLengthRange(registration.value, 2, 10)) {
         valid = false;
         registration.classList.add("error-input");
-        errorRegistration.innerText = "Pole powinno zawierać od 4 do 10 znaków";
+        errorRegistration.innerText = "Pole powinno zawierać od 2 do 10 znaków";
     }
 
+    // CHECK TYPE
+    if (type.value.length > 0 && !checkTextLengthRange(type.value,2,60)){
+        valid = false;
+        type.classList.add("error-input");
+        errorType.innerText = "Pole powinno zawierać od 2 do 60 znaków";
+    }
+
+
+    // CHECK COLOR
+    if (color.value.length > 0 && !checkTextLengthRange(color.value,2,60)){
+        valid = false;
+        color.classList.add("error-input");
+        errorColor.innerText = "Pole powinno zawierać od 2 do 60 znaków";
+    }
+
+
+    // CHECK OVERALL VALIDITY
     if (!valid) {
         errorsSummary.innerText = "Formularz zawiera błędy";
     }
 
     return valid;
 }
-
-resetErrors([firstNameInput, lastNameInput, emailInput], [errorFirstName, errorLastName, errorEmail], errorsSummary);
