@@ -73,12 +73,24 @@ exports.showVehicleDetails = (req, res, next) => {
 exports.addVehicle = (req, res, next) => {
     console.log("add vehicle from veh controller");
     const vehData = {...req.body};
+    let errorMessage;
+
     VehicleRepository.createVehicle(vehData)
         .then(result => {
             res.redirect('/vehicle');
         })
         .catch(err => {
-            console.log('error returned:\n' + err.details);
+            console.log('error returned:\n' + err.message);
+            errorMessage = err.message
+            if(err.details === undefined){
+                if(err.message.startsWith('Duplicate entry'))
+                    errorMessage = 'Pojazd o podanej tablicy rejestracyjnej już istnieje! (' + err.message + ')';
+                res.render('pages/vehicle/vehicle-error',{
+                    pageTitle: 'Wystąpił błąd',
+                    errorMessage: errorMessage,
+                    navLocation: 'vehicle'
+                })
+            }
             res.render('pages/vehicle/vehicle-form', {
                 veh: vehData,
                 pageTitle: 'Dodawanie Pojazdu',
