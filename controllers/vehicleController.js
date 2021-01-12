@@ -125,9 +125,17 @@ exports.updateVehicle = (req, res, next) => {
 
 exports.deleteVehicle = (req, res, next) => {
     const registration = req.params.registration;
+    let errorMessage;
     VehicleRepository.deleteVehicle(registration)
         .then(() => {
             res.redirect('/vehicle');
+        })
+        .catch(err => {
+            errorMessage = err.message;
+            res.render('pages/vehicle/vehicle-error', {
+                errorMessage: errorMessage,
+                navLocation: 'vehicle'
+            });
         });
 };
 
