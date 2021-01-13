@@ -54,7 +54,7 @@ exports.createEncounter = (newEncData) => {
     }
     console.log('createEncounter');
     console.log(newEncData);
-    const sql = 'INSERT into Encounter (Car_registration,Camera_id,time,authorized,direction) VALUES (?,?,?,?,?)';
+    const sql = 'INSERT into Encounter (Car_registration,Camera_id,time,authorized,direction) VALUES (?,?,FROM_UNIXTIME(?),?,?)';
     return db.promise().execute(sql, [newEncData.Car_registration, newEncData.Camera_id, newEncData.time,newEncData.authorized,newEncData.direction]);
 };
 

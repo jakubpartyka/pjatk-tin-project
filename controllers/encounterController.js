@@ -106,6 +106,14 @@ exports.showEncounterDetails = (req, res, next) => {
 exports.addEncounter = (req, res, next) => {
     const encData = { ...req.body };
     console.log("add encounter data BELOW\n" + encData);
+
+    const originalTimestamp = req.body.time;
+
+    let ts = (new Date(req.body.time).getTime()/1000);
+    console.log('epoch: ' + ts);
+    encData['time'] = ts;
+    //todo 2019-01-01 12:10: -> nie ma prawa przejść xd
+
     EncounterRepository.createEncounter(encData)
         .then( result => {
             res.redirect('/encounter');
@@ -113,13 +121,22 @@ exports.addEncounter = (req, res, next) => {
         .catch(err => {
             let allCams, allVehs;
             const error = err;
-            const enc = {
-                id: -1,
-                Camera_id: -2,
-                Car_registration: -3,
-                authorized: 0,
-                direction: 1
+
+            encData['time'] = originalTimestamp;
+
+            if(encData['Car_registration'] === undefined)
+                encData['Car_registration'] = 'xxx'
+
+            if(encData['Camera_id'] === undefined)
+                encData['Camera_id'] = -1
+
+            for ( let xd in encData){
+                let name = xd;
+                let val = encData[name];
+                console.log(name + ' ' + val)
             }
+
+
             CameraRepository.getCameras()
                 .then(cams => {
                     allCams = cams;
@@ -130,7 +147,7 @@ exports.addEncounter = (req, res, next) => {
                     res.render('pages/encounter/encounter-form', {
                         allCams: allCams,
                         allVehs: allVehs,
-                        enc: enc,
+                        enc: encData,
                         pageTitle: 'Nowy wpis',
                         formMode: 'createNew',
                         btnLabel: 'Dodaj wpis',

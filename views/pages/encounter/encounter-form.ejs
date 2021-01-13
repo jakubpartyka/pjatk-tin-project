@@ -14,7 +14,7 @@
         <!--CAR REGISTRATION-->
         <label for="Car_registration">Nr. rej.:<abbr title="required" aria-label="required">*</abbr></label>
         <select id="Car_registration" name="Car_registration" required <%= (formMode === 'showDetails' || formMode === 'edit') ? 'disabled' : '' %>
-                class="<%= validationErrors.find(e => e.path.includes('time')) ? 'error-input' : '' %>"
+                class="<%= validationErrors.find(e => e.path.includes('Car_registration')) ? 'error-input' : '' %>"
         >
             <option value="" selected disabled>--- Wybierz pojazd ---</option>
             <% for (let i = 0; i < allVehs.length; i++) { let veh = allVehs[i]; %>
@@ -32,7 +32,7 @@
         <!--CAMERA ID-->
         <label for="Camera_id">Kamera:<abbr title="required" aria-label="required">*</abbr></label>
         <select id="Camera_id" name="Camera_id" required <%= (formMode === 'showDetails' || formMode === 'edit' ) ? 'disabled' : '' %>
-                class="<%= validationErrors.find(e => e.path.includes('time')) ? 'error-input' : '' %>"
+                class="<%= validationErrors.find(e => e.path.includes('Camera_id')) ? 'error-input' : '' %>"
         >
             <option value="" selected disabled>--- Wybierz kamerę ---</option>
             <% for (let i = 0; i < allCams.length; i++) { let cam = allCams[i]; %>
@@ -49,7 +49,7 @@
 
         <!--TIME-->
         <label for="time">Czas:<abbr title="required" aria-label="required">*</abbr></label>
-        <input type="text" name="time" id="time" value="<%= (formMode === 'createNew') ? '' : enc.time.toISOString().split('T')[0] + ' ' +  enc.time.toISOString().split('T')[1].substring(0,8)%>"
+        <input type="text" name="time" id="time" value="<%= (formMode === 'createNew') ? ((enc.time !== null) ? enc.time : '') : enc.time.toISOString().split('T')[0] + ' ' +  enc.time.toISOString().split('T')[1].substring(0,8)%>"
                 <%= (formMode == 'showDetails') ? 'disabled' : '' %>
                class="<%= validationErrors.find(e => e.path.includes('time')) ? 'error-input' : '' %>"
         />

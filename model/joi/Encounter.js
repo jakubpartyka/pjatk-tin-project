@@ -20,6 +20,9 @@ const errMessages = (errors) => {
             case "string.max":
                 err.message = `Pole powinno zawierać co najwyżej ${err.local.limit} znaki`;
                 break;
+            case "date.format":
+                err.message = "Niepoprawny format pola"
+                break;
             default:
                 console.log(err.code);
                 break;
@@ -40,10 +43,8 @@ const vehSchema = Joi.object({
     Camera_id: Joi.number()
         .required()
         .error(errMessages),
-    time: Joi.string()
+    time: Joi.date().timestamp()
         .required()
-        .min(2)
-        .max(60)
         .error(errMessages),
     authorized: Joi.string()
         .optional()

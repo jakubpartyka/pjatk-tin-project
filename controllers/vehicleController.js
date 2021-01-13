@@ -11,7 +11,6 @@ exports.showVehicleList = (req, res, next) => {
 }
 
 exports.showAddVehicleForm = (req, res, next) => {
-    const validationErrors = [];
     res.render('pages/vehicle/vehicle-form', {
         veh: {},
         pageTitle: 'Dodaj nowy pojazd',
@@ -19,7 +18,7 @@ exports.showAddVehicleForm = (req, res, next) => {
         btnLabel: 'Dodaj',
         formAction: '/vehicle/add',
         navLocation: 'vehicle',
-        validationErrors: validationErrors
+        validationErrors: []
     });
 }
 
