@@ -33,7 +33,6 @@ function validateForm() {
         cameraId.classList.add("error-input");
         errorCamera.innerText = "Pole jest wymagane";
     }
-
     if (!checkRequired(time.value)) {
         valid = false;
         time.classList.add("error-input");
@@ -42,6 +41,16 @@ function validateForm() {
         valid = false;
         time.classList.add("error-input");
         errorTime.innerText = "Pole powinno mieć format yyyy-mm-dd hh:mm:ss";
+    }
+    else if (timeStampFromFuture(time.value)){
+        valid = false;
+        time.classList.add("error-input");
+        errorTime.innerText = "Podana data nie może być z przyszłości";
+    }
+    else if(timeStampFromFarPast(time.value)){
+        valid = false;
+        time.classList.add("error-input");
+        errorTime.innerText = "Data nie może być starsza niż 1970-01-01 00:00:01";
     }
 
     if(!checkRequired(authorized.value)){

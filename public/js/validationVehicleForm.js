@@ -21,10 +21,10 @@ function validateForm() {
         valid = false;
         registration.classList.add("error-input");
         errorRegistration.innerText = "Pole jest wymagane";
-    } else if (!checkTextLengthRange(registration.value, 2, 10)) {
+    } else if (!checkTextLengthRange(registration.value, 2, 8)) {
         valid = false;
         registration.classList.add("error-input");
-        errorRegistration.innerText = "Pole powinno zawierać od 2 do 10 znaków";
+        errorRegistration.innerText = "Pole powinno zawierać od 2 do 8 znaków";
     } else if (registration.value.length > 0 && !checkCharacters(registration.value)){
         valid = false;
         registration.classList.add("error-input");

@@ -11,12 +11,39 @@ function resetErrors(inputs, errorTexts, errorInfo) {
     errorInfo.innerText = "";
 }
 
+function timeStampFromFuture(value) {
+    if (!value) {
+        return false;
+    }
+    value = value.toString().trim();
+
+    d_now = new Date();
+    d_inp = new Date(value)
+    return d_now.getTime() <= d_inp.getTime();
+}
+
+function timeStampFromFarPast(value){
+    if (!value) {
+        return false;
+    }
+    value = value.toString().trim();
+
+    d_past = new Date("1970-01-01");
+    d_past.setHours(0);
+    d_past.setMinutes(0);
+    d_past.setSeconds(1);
+
+    d_inp = new Date(value)
+    return d_inp.getTime() < d_past.getTime();
+}
+
 function checkRequired(value) {
     if (!value) {
         return false;
     }
     value = value.toString().trim();
     return !(value === "" || value === "type");
+
 
 }
 

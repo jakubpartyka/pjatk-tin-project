@@ -20,6 +20,7 @@ services:
       MYSQL_DATABASE: default_schema
     volumes:
       - "mysqldata:/var/lib/mysql"
+    command: ['--default-time-zone=+01:00']
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -36,5 +37,4 @@ services:
 volumes:
   mongodata:
   mysqldata:
-
 

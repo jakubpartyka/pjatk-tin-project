@@ -23,6 +23,15 @@ const errMessages = (errors) => {
             case "date.format":
                 err.message = "Niepoprawny format pola"
                 break;
+            case "date.base":
+                err.message = "Pole powinno mieć format yyyy-MM-dd hh:mm:ss"
+                break;
+            case "date.less":
+                err.message = "Data nie może być z przyszłości";
+                break;
+            case "date.greater":
+                err.message = "Data nie może być mniejsza niż 1970-01-01 00:00:01"
+                break
             default:
                 console.log(err.code);
                 break;
@@ -43,8 +52,10 @@ const vehSchema = Joi.object({
     Camera_id: Joi.number()
         .required()
         .error(errMessages),
-    time: Joi.date().timestamp()
+    time: Joi.date().timestamp('unix')
         .required()
+        .less("now")
+        .greater(0)
         .error(errMessages),
     authorized: Joi.string()
         .optional()

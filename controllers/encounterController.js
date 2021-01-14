@@ -45,7 +45,6 @@ exports.showAddEncounterForm = (req, res, next) => {
 }
 
 exports.showEditEncounterForm = (req, res, next) => {
-    console.log(req.body);
     let allCams, allVehs;
     const encId = req.params.encId;
     CameraRepository.getCameras()
@@ -58,10 +57,7 @@ exports.showEditEncounterForm = (req, res, next) => {
             return EncounterRepository.getEncounterById(encId)
         })
         .then(enc => {
-            let a = allVehs[0].registration.toString();
-            let b = enc.Car_registration.toString();
-            console.log(a + ' ' + b);
-            console.log(a === b);
+            console.log('xdxd')
             res.render('pages/encounter/encounter-form', {
                 enc: enc,
                 allCams: allCams,
@@ -110,9 +106,14 @@ exports.addEncounter = (req, res, next) => {
     const originalTimestamp = req.body.time;
 
     let ts = (new Date(req.body.time).getTime()/1000);
+    ts += 3600;
+    console.log('form ts: ' + originalTimestamp)
     console.log('epoch: ' + ts);
     encData['time'] = ts;
     //todo 2019-01-01 12:10: -> nie ma prawa przejść xd
+
+
+    //TODO CZAS COFA SIE O 1 H
 
     EncounterRepository.createEncounter(encData)
         .then( result => {
@@ -161,33 +162,51 @@ exports.addEncounter = (req, res, next) => {
 
 exports.updateEncounter = (req, res, next) => {
     const encId = req.body.id;
+    const originalTimestamp = req.body.time;
     let encData = { ...req.body };
-    encData.Car_registration = "XXX";
     encData.Camera_id = 0;
+    encData.Car_registration='xxx'
+    console.log('---------')
+    encData['time'] = (new Date(req.body.time).getTime()/1000);
+    encData['time'] += 3600;
 
     EncounterRepository.updateEncounter(encId, encData)
         .then( result => {
             res.redirect('/encounter');
         })
         .catch(err => {
-            console.log(err.details);
-            res.render('pages/encounter/encounter-form', {
-                allCams: {},
-                allVehs: {},
-                enc: {},
-                pageTitle: 'Nowy wpis',
-                formMode: 'createNew',
-                btnLabel: 'Dodaj wpis',
-                formAction: '/encounter/add',
-                navLocation: 'encounter',
-                validationErrors: err.details
-            });
+            let allVehs,allCams;
+            let error = err;
+            encData['time'] = originalTimestamp;
+            VehicleRepository.getVehicles()
+                .then(vehs => {
+                    allVehs = vehs;
+                    return CameraRepository.getCameras()
+                })
+                .then(cams => {
+                    allCams = cams;
+                    return EncounterRepository.getEncounterById(encData['id'])
+                })
+                .then(enc => {
+                    console.log('im here')
+
+                    res.render('pages/encounter/encounter-form', {
+                        allCams: allCams,
+                        allVehs: allVehs,
+                        enc: enc,
+                        pageTitle: 'Edycja danych wpisu',
+                        formMode: 'edit',
+                        btnLabel: 'Edytuj dane',
+                        formAction: '/encounter/edit',
+                        navLocation: 'encounter',
+                        validationErrors: error.details
+                    });
+                })
         });
 };
 
 exports.deleteEncounter = (req, res, next) => {
     console.log("delete encounter");
-    console.log(req.params);
     const encId = req.params.encId;
     EncounterRepository.deleteEncounter(encId)
         .then( () => {

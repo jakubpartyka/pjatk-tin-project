@@ -5,7 +5,6 @@ const encSchema = require('../../model/joi/Encounter');
 exports.getEncounters = () => {
     return db.promise().query('SELECT * FROM Encounter')
         .then( (results, fields) => {
-            console.log(results[0]);
             return results[0];
         })
         .catch(err => {
@@ -36,8 +35,6 @@ exports.getEncounterById = (encId) => {
                 direction: firstRow.direction
             }
             console.log("query OK");
-            console.log(enc);
-
             return enc;
         })
         .catch(err => {
@@ -53,19 +50,24 @@ exports.createEncounter = (newEncData) => {
         return Promise.reject(vRes.error);
     }
     console.log('createEncounter');
-    console.log(newEncData);
     const sql = 'INSERT into Encounter (Car_registration,Camera_id,time,authorized,direction) VALUES (?,?,FROM_UNIXTIME(?),?,?)';
     return db.promise().execute(sql, [newEncData.Car_registration, newEncData.Camera_id, newEncData.time,newEncData.authorized,newEncData.direction]);
 };
 
 exports.updateEncounter = (encId, encData) => {
-    console.log(encData);
+    console.log('DATA IN UDATE ENC/REPO\n');
+    console.log('-----------')
+    console.log('update enc repo - enc:');
+    for (let xd in encData){
+        console.log(xd + ' ' + encData[xd])
+    }
+    console.log('-----------')
     const vRes = encSchema.validate(encData, { abortEarly: false} );
     if(vRes.error) {
         console.log("error returned " + vRes.error);
         return Promise.reject(vRes.error);
     }
-    const sql = `UPDATE Encounter set time = ?, authorized = ?, direction = ? WHERE id = ?`;
+    const sql = `UPDATE Encounter set time = FROM_UNIXTIME(?), authorized = ?, direction = ? WHERE id = ?`;
     return db.promise().execute(sql, [encData.time, encData.authorized, encData.direction, encId]);
 };
 

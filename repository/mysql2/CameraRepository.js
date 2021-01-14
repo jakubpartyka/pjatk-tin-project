@@ -4,7 +4,6 @@ const camSchema = require('../../model/joi/Camera');
 exports.getCameras = () => {
     return db.promise().query('SELECT * FROM Camera')
         .then( (results, fields) => {
-            console.log(results[0]);
             return results[0];
         })
         .catch(err => {
@@ -45,7 +44,6 @@ exports.getCameraEncounters = (camId) => {
     const query = `SELECT * FROM Encounter WHERE Camera_id = ?`;
     return db.promise().query(query, [camId])
         .then( (results, fields) => {
-            console.log(results[0]);
             return results[0];
         })
         .catch(err => {

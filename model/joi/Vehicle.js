@@ -38,7 +38,7 @@ const vehSchema = Joi.object({
         .allow(""),
     registration: Joi.string()
         .min(2)
-        .max(10)
+        .max(8)
         .required()
         .regex(specialCharacters, { invert: true })
         .error(errMessages),
